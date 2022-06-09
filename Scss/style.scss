@@ -1,0 +1,147 @@
+body {
+    margin: 0 7%;
+    Header {
+        display: flex;
+        justify-content: center;
+        img {
+            width: 20%;
+            margin-top: 2%;
+        }
+    }
+    form {
+        position: relative;
+        margin: 15px 0 30px 0;
+        input {
+            width: 100%;
+            height: 50px;
+            padding-left: 20px;
+            background: #edecec;
+            border: none;
+            border-radius: 5px;
+            &::placeholder {
+                color: #b8b8b8;
+            }
+        }
+        i {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex !important;
+            align-items: center;
+            height: 100%;
+            margin-right: 15px;
+            &::before {
+                font-size: 25px;
+            }
+        }
+    }
+    nav {
+        display: flex;
+        &>div {
+            position: relative;
+            margin: 0 10px;
+            border-radius: 5px;
+            &:first-of-type {
+                margin-left: 0;
+                background: #477ee9;
+                input {
+                    background: #477ee9;
+                }
+            }
+            &:nth-of-type(2) {
+                background: #21c795;
+                input {
+                    background: #21c795;
+                }
+            }
+            &:nth-of-type(3) {
+                background: #e03c3c;
+                margin-right: 0;
+                input {
+                    background: #e03c3c;
+                }
+            }
+            &>div {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                input {
+                    width: 130px;
+                    height: 70px;
+                    padding-left: 20px;
+                    border: none;
+                    border-radius: 5px;
+                    &::placeholder {
+                        color: white;
+                        font-size: 15px;
+                    }
+                }
+                i {
+                    margin-right: 20px;
+                    &::before {
+                        color: white;
+                    }
+                }
+            }
+            ul {
+                column-count: 3;
+                column-gap: 50px;
+                margin-top: 0;
+                padding-left: 20px;
+                li {
+                    margin: 0 0 10px;
+                    list-style-type: none;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    color: white;
+                }
+            }
+        }
+    }
+    section#affichage_des_recettes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 2%;
+        article {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            width: calc((100%/3) - 30px);
+            height: 55vh;
+            margin-bottom: 45px;
+            background: #c9bbbb;
+            border-radius: 5px;
+            div {
+                background: #e4e4e4;
+                &.container_titre {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0 5%;
+                }
+                &.container_infos {
+                    display: flex;
+                    gap: 30px;
+                    padding: 5%;
+                    font-size: 14px;
+                    .div_ingredients {
+                        display: flex;
+                        flex-direction: column;
+                        width: 50%;
+                        p {
+                            margin: 0;
+                        }
+                    }
+                    .description {
+                        width: 50%;
+                        margin: 0;
+                        max-height: 100px;
+                        overflow: hidden;
+                    }
+                }
+            }
+        }
+    }
+}
+
