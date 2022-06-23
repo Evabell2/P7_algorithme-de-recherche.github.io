@@ -1,5 +1,5 @@
 body {
-    margin: 0 7%;
+    margin: 0 5%;
     Header {
         display: flex;
         justify-content: center;
@@ -10,7 +10,7 @@ body {
     }
     form {
         position: relative;
-        margin: 15px 0 30px 0;
+        margin: 15px 15px 30px 15px;
         input {
             width: 100%;
             height: 50px;
@@ -20,6 +20,9 @@ body {
             border-radius: 5px;
             &::placeholder {
                 color: #b8b8b8;
+            }
+            &:focus-visible {
+                outline: -webkit-focus-ring-color auto 0px;
             }
         }
         i {
@@ -37,6 +40,7 @@ body {
     }
     nav {
         display: flex;
+        margin: 0 15px;
         &>div {
             position: relative;
             margin: 0 10px;
@@ -65,15 +69,22 @@ body {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                height: 100%;
                 input {
                     width: 130px;
-                    height: 70px;
+                    height: 45px;
                     padding-left: 20px;
                     border: none;
                     border-radius: 5px;
+                    color: white;
+                    font-size: 15px;
                     &::placeholder {
                         color: white;
                         font-size: 15px;
+                        border: none;
+                    }
+                    &:focus-visible {
+                        outline: -webkit-focus-ring-color auto 0px;
                     }
                 }
                 i {
@@ -87,21 +98,48 @@ body {
                 column-count: 3;
                 column-gap: 50px;
                 margin-top: 0;
-                padding-left: 20px;
+                padding: 5px 20px;
                 li {
                     margin: 0 0 10px;
                     list-style-type: none;
                     font-family: sans-serif;
                     font-size: 15px;
                     color: white;
+                    cursor: pointer;
+                    &:hover {
+                        background: white;
+                        color: black;
+                        border-radius: 5px;
+                    }
                 }
+            }
+        }
+    }
+    section#affichage_tags {
+        display: flex;
+        margin: 0 15px 15px 15px;
+        .tag {
+            padding: 10px 15px;
+            margin-right: 15px;
+            border-radius: 5px;
+            list-style-type: none;
+            color: white;
+            font-family: sans-serif;
+            font-size: 13px;
+            &.blue {
+                background: #477ee9;
+            }
+            &.green {
+                background: #21c795;
+            }
+            &.red {
+                background: #e03c3c;
             }
         }
     }
     section#affichage_des_recettes {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
         margin-top: 2%;
         article {
             display: flex;
@@ -109,39 +147,75 @@ body {
             justify-content: flex-end;
             width: calc((100%/3) - 30px);
             height: 55vh;
-            margin-bottom: 45px;
+            margin: 15px;
             background: #c9bbbb;
             border-radius: 5px;
-            div {
+            section {
+                height: 30vh;
                 background: #e4e4e4;
-                &.container_titre {
+                border-radius: 0 0 5px 5px;
+                .container_titre {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
                     padding: 0 5%;
+                    .duree_recette {
+                        &::before {
+                            content: "";
+                            display: block;
+                            width: 20px;
+                            height: 20px;
+                            margin-right: 5px;
+                            background: url("/Images/lhorloge.png") center no-repeat;
+                            background-size: contain;
+                        }
+                        display: flex;
+                        align-items: center;
+                    }
                 }
-                &.container_infos {
+                .container_infos {
                     display: flex;
                     gap: 30px;
-                    padding: 5%;
+                    padding: 0 5% 5% 5%;
                     font-size: 14px;
                     .div_ingredients {
                         display: flex;
                         flex-direction: column;
-                        width: 50%;
+                        width: 60%;
                         p {
                             margin: 0;
                         }
                     }
                     .description {
-                        width: 50%;
-                        margin: 0;
-                        max-height: 100px;
+                        width: 40%;
+                        height: 100%;
                         overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 7;
+                        -webkit-box-orient: vertical;
                     }
                 }
             }
         }
+    } 
+}
+
+.input_ouvert div {
+    height: initial;
+    input {
+        width: 100%;
+        height: 75px;
+        opacity: .5;
+    }
+    i {
+        transform: rotate(180deg);
+    }
+}
+.input_ferme {
+    height: 100%;
+    input {
+        height: 75px;
     }
 }
 

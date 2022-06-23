@@ -1,5 +1,5 @@
 body {
-  margin: 0 7%;
+  margin: 0 5%;
 }
 
 body Header {
@@ -18,7 +18,7 @@ body Header img {
 
 body form {
   position: relative;
-  margin: 15px 0 30px 0;
+  margin: 15px 15px 30px 15px;
 }
 
 body form input {
@@ -46,6 +46,10 @@ body form input::placeholder {
   color: #b8b8b8;
 }
 
+body form input:focus-visible {
+  outline: -webkit-focus-ring-color auto 0px;
+}
+
 body form i {
   position: absolute;
   top: 0;
@@ -68,6 +72,7 @@ body nav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  margin: 0 15px;
 }
 
 body nav > div {
@@ -112,34 +117,45 @@ body nav > div > div {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  height: 100%;
 }
 
 body nav > div > div input {
   width: 130px;
-  height: 70px;
+  height: 45px;
   padding-left: 20px;
   border: none;
   border-radius: 5px;
+  color: white;
+  font-size: 15px;
 }
 
 body nav > div > div input::-webkit-input-placeholder {
   color: white;
   font-size: 15px;
+  border: none;
 }
 
 body nav > div > div input:-ms-input-placeholder {
   color: white;
   font-size: 15px;
+  border: none;
 }
 
 body nav > div > div input::-ms-input-placeholder {
   color: white;
   font-size: 15px;
+  border: none;
 }
 
 body nav > div > div input::placeholder {
   color: white;
   font-size: 15px;
+  border: none;
+}
+
+body nav > div > div input:focus-visible {
+  outline: -webkit-focus-ring-color auto 0px;
 }
 
 body nav > div > div i {
@@ -156,7 +172,7 @@ body nav > div ul {
   -webkit-column-gap: 50px;
           column-gap: 50px;
   margin-top: 0;
-  padding-left: 20px;
+  padding: 5px 20px;
 }
 
 body nav > div ul li {
@@ -165,6 +181,42 @@ body nav > div ul li {
   font-family: sans-serif;
   font-size: 15px;
   color: white;
+  cursor: pointer;
+}
+
+body nav > div ul li:hover {
+  background: white;
+  color: black;
+  border-radius: 5px;
+}
+
+body section#affichage_tags {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 15px 15px 15px;
+}
+
+body section#affichage_tags .tag {
+  padding: 10px 15px;
+  margin-right: 15px;
+  border-radius: 5px;
+  list-style-type: none;
+  color: white;
+  font-family: sans-serif;
+  font-size: 13px;
+}
+
+body section#affichage_tags .tag.blue {
+  background: #477ee9;
+}
+
+body section#affichage_tags .tag.green {
+  background: #21c795;
+}
+
+body section#affichage_tags .tag.red {
+  background: #e03c3c;
 }
 
 body section#affichage_des_recettes {
@@ -173,9 +225,6 @@ body section#affichage_des_recettes {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   margin-top: 2%;
 }
 
@@ -192,16 +241,18 @@ body section#affichage_des_recettes article {
           justify-content: flex-end;
   width: calc((100%/3) - 30px);
   height: 55vh;
-  margin-bottom: 45px;
+  margin: 15px;
   background: #c9bbbb;
   border-radius: 5px;
 }
 
-body section#affichage_des_recettes article div {
+body section#affichage_des_recettes article section {
+  height: 30vh;
   background: #e4e4e4;
+  border-radius: 0 0 5px 5px;
 }
 
-body section#affichage_des_recettes article div.container_titre {
+body section#affichage_des_recettes article section .container_titre {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -214,16 +265,35 @@ body section#affichage_des_recettes article div.container_titre {
   padding: 0 5%;
 }
 
-body section#affichage_des_recettes article div.container_infos {
+body section#affichage_des_recettes article section .container_titre .duree_recette {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body section#affichage_des_recettes article section .container_titre .duree_recette::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  background: url("/Images/lhorloge.png") center no-repeat;
+  background-size: contain;
+}
+
+body section#affichage_des_recettes article section .container_infos {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   gap: 30px;
-  padding: 5%;
+  padding: 0 5% 5% 5%;
   font-size: 14px;
 }
 
-body section#affichage_des_recettes article div.container_infos .div_ingredients {
+body section#affichage_des_recettes article section .container_infos .div_ingredients {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -231,17 +301,43 @@ body section#affichage_des_recettes article div.container_infos .div_ingredients
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 50%;
+  width: 60%;
 }
 
-body section#affichage_des_recettes article div.container_infos .div_ingredients p {
+body section#affichage_des_recettes article section .container_infos .div_ingredients p {
   margin: 0;
 }
 
-body section#affichage_des_recettes article div.container_infos .description {
-  width: 50%;
-  margin: 0;
-  max-height: 100px;
+body section#affichage_des_recettes article section .container_infos .description {
+  width: 40%;
+  height: 100%;
   overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+}
+
+.input_ouvert div {
+  height: initial;
+}
+
+.input_ouvert div input {
+  width: 100%;
+  height: 75px;
+  opacity: .5;
+}
+
+.input_ouvert div i {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.input_ferme {
+  height: 100%;
+}
+
+.input_ferme input {
+  height: 75px;
 }
 /*# sourceMappingURL=style.css.map */
