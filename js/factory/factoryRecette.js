@@ -38,8 +38,7 @@ function recetteFactory(data, recipes) {
                 return x !== undefined;
             })
             pIngredient.innerHTML = `<strong>${filtered[0]} : </strong>${filtered.join(" ").split(filtered[0])}`
-            // pIngredient.innerHTML = `${filtered.join(" ")}`
-            
+            // pIngredient.innerHTML = `${filtered.join(" ")}`        
         }
         return (article)
     }
