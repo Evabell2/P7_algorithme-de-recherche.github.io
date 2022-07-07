@@ -35,19 +35,22 @@ function recherchePrincipale() {
     div3.appendChild(liste3)
 
     barreDeRecherche.addEventListener('input', (e) => {
-        const entreeValue = e.target.value.toLowerCase()        
-        if (entreeValue.length >= 3) {
-            const recettesFiltrees = recettes.filter((recette) => {
+        const entreeValue = e.target.value.toLowerCase() 
+        
+        while (entreeValue.length >= 3) {
+            
+            if (entreeValue.includes(recettes.name)) {
+                console.log(recettes.includes());
+            }
+            if (entreeValue.includes(recettes.description)) {
                 
-                return ( 
-                    recette.name.toLowerCase().includes(entreeValue)
-                    ||
-                    recette.description.toLowerCase().includes(entreeValue)
-                    ||
-                    recette.ingredients.some(i => i.ingredient.toLowerCase().includes(entreeValue))
-                )
-            })
-            renderCards(recettesFiltrees)
+            }
+            if (entreeValue.includes(recettes.ingredients.some(i => i.ingredient.toLowerCase()))) {
+
+            }
+        
+
+            
              
             // Appliance, ustensils, ingredients des recettes restantes
             liste1.innerHTML = ``
@@ -150,9 +153,9 @@ function recherchePrincipale() {
                 }
             } 
         }
-        else {
-            renderCards(recettes)
-        }
+        while (entreeValue.length < 3) {
+            renderCards(recettes)      
+        } 
     })
 }
 
@@ -284,4 +287,3 @@ function rechercheAvancee() {
         }
     })
 }
-test
