@@ -71,16 +71,20 @@ function recherchePrincipale() {
             for (let i = 0; i < recettesFiltrees.length; i++) {
 
                 // ingredients
-                const afficheIngredients = recettesFiltrees[i].ingredients   
+                const afficheIngredients = recettesFiltrees[i].ingredients 
+                // afficeIngredients = recettes filtrées
                 for (let n = 0; n < afficheIngredients.length; n++) {
                     const listeIngredients = afficheIngredients[n].ingredient
                     const liIngredients = document.createElement('li')
                     liIngredients.textContent = listeIngredients
+                    // liIngredients est la liste de tout les ingredients des recettes filtrées
                     const dejaLa = [...liste1.children].map(tag => tag.textContent.toLowerCase())
+                    // dejala est la liste des ingrédients dans la recherche avancée
                     if (!dejaLa.includes(listeIngredients.toLowerCase())) {
+                        // pour gérer les doublons
                         liste1.appendChild(liIngredients)
-                        // TAGS
                         liIngredients.addEventListener('click', (e) => {
+                            // création tag
                             const newTagBlue = document.createElement('li')
                             const pNewTagBlue = document.createElement('p')
                             const closeNewTagBlue = document.createElement('i')
@@ -91,13 +95,21 @@ function recherchePrincipale() {
                             newTagBlue.appendChild(closeNewTagBlue)
                             sectionTag.appendChild(newTagBlue)
                             filter()
-                            // liste1.innerHTML = ""
-                            // for (let i = 0; i < afficheIngredients.length; i++) {
-                            //     const ingredientRestant = afficheIngredients[i].ingredient;
-                            //     const NewliIngredients = document.createElement('li')
-                            //     NewliIngredients.textContent = ingredientRestant
-                            //     liste1.appendChild(NewliIngredients)                            
-                            // }
+
+                            for (let i = 0; i < afficheIngredients.length; i++) {
+                                const ingredientsRestants = afficheIngredients[i].ingredient
+
+                                const ingredientsInput = liste1.children
+                                for (const ingredient of ingredientsInput) {
+                                    let lesIngredientsInput = ingredient.textContent  
+
+                                    if (lesIngredientsInput.includes(ingredientsRestants)) {
+                                        ingredient.style.display = "none"
+                                        // ca fait le contraire
+                                    }
+
+                                }
+                            }     
                         })
                     }
                 }               
@@ -199,10 +211,9 @@ function filter() {
     for (const tag of lesTags) {
         const closeTag = tag.lastChild        
         closeTag.addEventListener('click', e => {
-            const li = closeTag.parentNode
-            if(li.style.display = "none") {
-                renderCards(recettes)
-            }
+            const parent = tag.parentNode
+            parent.removeChild(tag)
+            filter() 
         }) 
     }
 }
