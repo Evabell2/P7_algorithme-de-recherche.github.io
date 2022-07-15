@@ -36,22 +36,21 @@ function recherchePrincipale() {
 
     barreDeRecherche.addEventListener('input', (e) => {
         const entreeValue = e.target.value.toLowerCase() 
-        
-        while (entreeValue.length >= 3) {
+    
+        if (entreeValue.length >= 3) {
+            const recettesFiltrees = []
             
-            if (entreeValue.includes(recettes.name)) {
-                console.log(recettes.includes());
+            for (const recette of recettes) {
+                if (recette.name.toLowerCase().includes(entreeValue)
+                ||
+                recette.description.toLowerCase().includes(entreeValue)
+                ||
+                recette.ingredients.some(i => i.ingredient.toLowerCase().includes(entreeValue))) {
+                    recettesFiltrees.push(recette)
+                }
             }
-            if (entreeValue.includes(recettes.description)) {
-                
-            }
-            if (entreeValue.includes(recettes.ingredients.some(i => i.ingredient.toLowerCase()))) {
-
-            }
+            renderCards(recettesFiltrees)
         
-
-            
-             
             // Appliance, ustensils, ingredients des recettes restantes
             liste1.innerHTML = ``
             liste2.innerHTML = ``
@@ -70,7 +69,7 @@ function recherchePrincipale() {
             Div1.className = "input_ouvert"
             Div2.className = "input_ouvert"
             Div3.className = "input_ouvert"
- 
+    
             for (let i = 0; i < recettesFiltrees.length; i++) {
 
                 // ingredients
@@ -152,10 +151,10 @@ function recherchePrincipale() {
                     }
                 }
             } 
-        }
-        while (entreeValue.length < 3) {
-            renderCards(recettes)      
         } 
+        else {
+            renderCards(recettes)      
+        }
     })
 }
 
