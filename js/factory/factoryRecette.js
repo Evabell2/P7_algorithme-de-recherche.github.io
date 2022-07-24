@@ -32,16 +32,13 @@ function recetteFactory(data, recipes) {
         for (const ingredients of dataIngredients) {
             const pIngredient = document.createElement('p')
             divIngredients.appendChild(pIngredient)
-            
             const arrIngredient = [ingredients.ingredient, ingredients.quantity, ingredients.unit]   
             let filtered = arrIngredient.filter(function(x) {
                 return x !== undefined;
             })
-            pIngredient.innerHTML = `<strong>${filtered[0]} : </strong>${filtered.join(" ").split(filtered[0])}`
-            // pIngredient.innerHTML = `${filtered.join(" ")}`        
+            pIngredient.innerHTML = `<span class="bold">${filtered[0]} ${filtered[1] ?":":""}</span> ${filtered[1] ?filtered[1]:""}  ${filtered[2] ?filtered[2]:""}`  
         }
         return (article)
     }
-    
     return { name, time, description, ingredients, getUserCardDOM }
 }

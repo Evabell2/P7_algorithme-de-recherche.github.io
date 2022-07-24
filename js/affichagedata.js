@@ -73,16 +73,19 @@ function recherchePrincipale() {
             for (let i = 0; i < recettesFiltrees.length; i++) {
 
                 // ingredients
-                const afficheIngredients = recettesFiltrees[i].ingredients   
+                const afficheIngredients = recettesFiltrees[i].ingredients 
                 for (let n = 0; n < afficheIngredients.length; n++) {
                     const listeIngredients = afficheIngredients[n].ingredient
                     const liIngredients = document.createElement('li')
                     liIngredients.textContent = listeIngredients
+                    // liIngredients est la liste de tout les ingredients des recettes filtrées
                     const dejaLa = [...liste1.children].map(tag => tag.textContent.toLowerCase())
+                    // dejala est la liste des ingrédients dans la recherche avancée
                     if (!dejaLa.includes(listeIngredients.toLowerCase())) {
+                        // pour gérer les doublons
                         liste1.appendChild(liIngredients)
-                        // TAGS
                         liIngredients.addEventListener('click', (e) => {
+                            // création tag
                             const newTagBlue = document.createElement('li')
                             const pNewTagBlue = document.createElement('p')
                             const closeNewTagBlue = document.createElement('i')
@@ -93,13 +96,20 @@ function recherchePrincipale() {
                             newTagBlue.appendChild(closeNewTagBlue)
                             sectionTag.appendChild(newTagBlue)
                             filter()
-                            // liste1.innerHTML = ""
-                            // for (let i = 0; i < afficheIngredients.length; i++) {
-                            //     const ingredientRestant = afficheIngredients[i].ingredient;
-                            //     const NewliIngredients = document.createElement('li')
-                            //     NewliIngredients.textContent = ingredientRestant
-                            //     liste1.appendChild(NewliIngredients)                            
-                            // }
+                            
+                            const ingredientsInput = liste1.children
+                            for (const ingredient of ingredientsInput) {
+                                ingredient.style.display = "none"
+                            }
+                            for (const ingredient of ingredientsInput) {
+                                let textIngredients = ingredient.textContent                              
+                                for (let i = 0; i < afficheIngredients.length; i++) {
+                                    const ingredientsRestants = afficheIngredients[i].ingredient
+                                    if (textIngredients == ingredientsRestants) {
+                                        ingredient.style.display = "block"
+                                    }
+                                }    
+                            }
                         })
                     }
                 }               
@@ -123,6 +133,20 @@ function recherchePrincipale() {
                         newTagGreen.appendChild(closeNewTagGreen)
                         sectionTag.appendChild(newTagGreen)
                         filter()
+
+                        const applianceInput = liste2.children
+                        for (const appliance of applianceInput) {
+                            appliance.style.display = "none"
+                        }
+                        for (const appliance of applianceInput) {
+                            let textAppliance = appliance.textContent                              
+                            for (let i = 0; i < afficheAppliance.length; i++) {
+                                const appliancesRestants = afficheAppliance
+                                if (textAppliance == appliancesRestants) {
+                                    appliance.style.display = "block"
+                                }
+                            }    
+                        }
                     })
                 }
                 
@@ -147,13 +171,31 @@ function recherchePrincipale() {
                             newTagRed.appendChild(closeNewTagRed)
                             sectionTag.appendChild(newTagRed)
                             filter()
+
+                            const ustensilesInput = liste3.children
+                            for (const ustensile of ustensilesInput) {
+                                ustensile.style.display = "none"
+                            }
+                            for (const ustensile of ustensilesInput) {
+                                let textUstensile = ustensile.textContent                              
+                                for (let i = 0; i < afficheUstensils.length; i++) {
+                                    const ustensilesRestants = afficheUstensils[i]
+                                    if (textUstensile == ustensilesRestants) {
+                                        ustensile.style.display = "block"
+                                    }
+                                }    
+                            }
                         })
                     }
                 }
-            } 
+            }  
         } 
         else {
-            renderCards(recettes)      
+            renderCards(recettes) 
+            const section = document.getElementById('aucune_recette')
+            section.innerHTML = `
+            <p><strong>Désolé, aucune recette ne correspond à votre critère…</strong> vous pouvez chercher « Poulet coco réunionnais », « poisson », « Lasagne Courgettes et Chèvre », « Far breton », « Crumble aux pommes » etc.</p>
+            `      
         }
     })
 }
@@ -174,11 +216,11 @@ function filter() {
 
     const recettesTags = recettes.filter((recette) => {
         return ( 
-            recette.ingredients.some(i => i.ingredient.includes(blueTags))
+            (blueTags.length == 0 || recette.ingredients.some(i => i.ingredient.includes(blueTags)))
             &&
-            recette.ustensils.some(u => u.includes(redTags))
+            (redTags.length == 0 || recette.ustensils.some(u => u.includes(redTags)))
             &&
-            recette.appliance.includes(greenTags)
+            (greenTags.length == 0 || recette.appliance.includes(greenTags))
             &&
             (
                 recette.name.toLowerCase().includes(entreeValue)
@@ -189,7 +231,7 @@ function filter() {
             )
         )
     })
-    if (recettesTags.length == 0) {
+    if (recettesTags == false) {
         const section = document.getElementById('aucune_recette')
         section.innerHTML = `
         <p><strong>Désolé, aucune recette ne correspond à votre critère…</strong> vous pouvez chercher « Poulet coco réunionnais », « poisson », « Lasagne Courgettes et Chèvre », « Far breton », « Crumble aux pommes » etc.</p>
@@ -201,10 +243,9 @@ function filter() {
     for (const tag of lesTags) {
         const closeTag = tag.lastChild        
         closeTag.addEventListener('click', e => {
-            const li = closeTag.parentNode
-            if(li.style.display = "none") {
-                renderCards(recettes)
-            }
+            const parent = tag.parentNode
+            parent.removeChild(tag)
+            filter() 
         }) 
     }
 }
@@ -285,4 +326,4 @@ function rechercheAvancee() {
             }
         }
     })
-}
+} 
