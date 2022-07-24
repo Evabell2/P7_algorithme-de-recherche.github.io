@@ -32,7 +32,6 @@ function recetteFactory(data, recipes) {
         for (const ingredients of dataIngredients) {
             const pIngredient = document.createElement('p')
             divIngredients.appendChild(pIngredient)
-            
             const arrIngredient = [ingredients.ingredient, ingredients.quantity, ingredients.unit]   
             let filtered = arrIngredient.filter(function(x) {
                 return x !== undefined;
@@ -41,6 +40,5 @@ function recetteFactory(data, recipes) {
         }
         return (article)
     }
-    
     return { name, time, description, ingredients, getUserCardDOM }
 }
