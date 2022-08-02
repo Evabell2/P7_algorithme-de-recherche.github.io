@@ -23,20 +23,82 @@ function renderCards(recettes) {
 
 function recherchePrincipale() {
     
-    const barreDeRecherche = document.querySelector('#searchPrincipale')
-    const liste1 = document.createElement('ul')
-    const liste2 = document.createElement('ul')
-    const liste3 = document.createElement('ul')
-    const div1 = document.getElementById('divIngredients')
-    const div2 = document.getElementById('divAppareils')
-    const div3 = document.getElementById('divUstensiles')
-    div1.appendChild(liste1)
-    div2.appendChild(liste2)
-    div3.appendChild(liste3)
+    // #region constantes
+        const barreDeRecherche = document.querySelector('#searchPrincipale')
+        const liste1 = document.createElement('ul')
+        const liste2 = document.createElement('ul')
+        const liste3 = document.createElement('ul')
+        const input1 = document.getElementById('inputIngredients')
+        const input2 = document.getElementById('inputAppareils')
+        const input3 = document.getElementById('inputUstensiles')
+        const div1 = document.getElementById('divIngredients')
+        const div2 = document.getElementById('divAppareils')
+        const div3 = document.getElementById('divUstensiles')
+        div1.appendChild(liste1)
+        div2.appendChild(liste2)
+        div3.appendChild(liste3)
+    // #endregion constantes
+    liste1.style.display = "none"
+    liste2.style.display = "none"
+    liste3.style.display = "none"
 
-    barreDeRecherche.addEventListener('input', (e) => {
-        const entreeValue = e.target.value.toLowerCase()        
-        if (entreeValue.length >= 3) {
+    // #region Ouverture des inputs avec chevron
+        // INGREDIENTS
+        const chevron1 = div1.querySelector('.fa-angle-down')
+        chevron1.addEventListener('click', (e) => {
+            if (liste1.style.display == "block") {
+                liste1.style.display = "none"
+                input1.placeholder = "Ingrédients"
+                chevron1.style.transform = "rotate(0deg)"
+                div1.classList.remove("input_ouvert")
+            }
+            else {
+                liste1.style.display = "block"
+                input1.placeholder = "Rechercher un ingrédient"
+                chevron1.style.transform = "rotate(180deg)"
+                div1.className += " input_ouvert "
+            }
+        })
+        //APPAREILS
+        const chevron2 = div2.querySelector('.fa-angle-down')
+        chevron2.addEventListener('click', (e) => {
+            if (liste2.style.display == "block") {
+                liste2.style.display = "none"
+                input2.placeholder = "Appareils"
+                chevron2.style.transform = "rotate(0deg)"
+                div2.classList.remove("input_ouvert")
+            }
+            else {
+                liste2.style.display = "block"
+                input2.placeholder = "Rechercher un appareil"
+                chevron2.style.transform = "rotate(180deg)"
+                div2.className += " input_ouvert "
+            }
+        })
+        // USTENSILES
+        const chevron3 = div3.querySelector('.fa-angle-down')
+        chevron3.addEventListener('click', (e) => {
+            if (liste3.style.display == "block") {
+                liste3.style.display = "none"
+                input3.placeholder = "Ustensiles"
+                chevron3.style.transform = "rotate(0deg)"
+                div3.classList.remove("input_ouvert")
+            }
+            else {
+                liste3.style.display = "block"
+                input3.placeholder = "Rechercher un ustensile"
+                chevron3.style.transform = "rotate(180deg)"
+                div3.className += " input_ouvert "
+            }
+        })
+    // #endregion Ouverture des inputs 
+
+    const runRecherche = (e) => {
+        const entreeValue = barreDeRecherche.value.toLowerCase() 
+        let started = false      
+        if (entreeValue.length >= 3 || !started) {
+            // started : la recherche se lance dès le début, sans le moteur de recherche
+            started = true
             const recettesFiltrees = recettes.filter((recette) => {
                 
                 return ( 
@@ -48,145 +110,110 @@ function recherchePrincipale() {
                 )
             })
             renderCards(recettesFiltrees)
+
+             // affichage inputs avec entreeValue barre de recherche principale
+             if (entreeValue.length >= 3) {
+                liste1.style.display = "block"
+                liste2.style.display = "block"
+                liste3.style.display = "block"
+                input1.placeholder = "Rechercher un ingrédient"
+                input2.placeholder = "Rechercher un appareil"
+                input3.placeholder = "Rechercher un ustensile"
+                chevron1.style.transform = "rotate(180deg)"
+                div1.className += " input_ouvert "
+                chevron2.style.transform = "rotate(180deg)"
+                div2.className += " input_ouvert "
+                chevron3.style.transform = "rotate(180deg)"
+                div3.className += " input_ouvert "
+            }
              
             // Appliance, ustensils, ingredients des recettes restantes
             liste1.innerHTML = ``
             liste2.innerHTML = ``
             liste3.innerHTML = ``
             const sectionTag = document.getElementById('affichage_tags')
-            // CSS
-            const input1 = document.getElementById('inputIngredients')
-            const input2 = document.getElementById('inputAppareils')
-            const input3 = document.getElementById('inputUstensiles')
-            input1.placeholder = "Rechercher un ingrédient"
-            input2.placeholder = "Rechercher un appareil"
-            input3.placeholder = "Rechercher un ustensile"
-            const Div1 = document.getElementById('divIngredients')
-            const Div2 = document.getElementById('divAppareils')
-            const Div3 = document.getElementById('divUstensiles')
-            Div1.className = "input_ouvert"
-            Div2.className = "input_ouvert"
-            Div3.className = "input_ouvert"
  
             for (let i = 0; i < recettesFiltrees.length; i++) {
 
-                // ingredients
-                const afficheIngredients = recettesFiltrees[i].ingredients 
-                for (let n = 0; n < afficheIngredients.length; n++) {
-                    const listeIngredients = afficheIngredients[n].ingredient
-                    const liIngredients = document.createElement('li')
-                    liIngredients.textContent = listeIngredients
-                    // liIngredients est la liste de tout les ingredients des recettes filtrées
-                    const dejaLa = [...liste1.children].map(tag => tag.textContent.toLowerCase())
-                    // dejala est la liste des ingrédients dans la recherche avancée
-                    if (!dejaLa.includes(listeIngredients.toLowerCase())) {
-                        // pour gérer les doublons
-                        liste1.appendChild(liIngredients)
-                        liIngredients.addEventListener('click', (e) => {
-                            // création tag
-                            const newTagBlue = document.createElement('li')
-                            const pNewTagBlue = document.createElement('p')
-                            const closeNewTagBlue = document.createElement('i')
-                            closeNewTagBlue.className = "fa-regular fa-circle-xmark"
-                            pNewTagBlue.textContent = listeIngredients
-                            newTagBlue.className = "tag blue"
-                            newTagBlue.appendChild(pNewTagBlue)
-                            newTagBlue.appendChild(closeNewTagBlue)
-                            sectionTag.appendChild(newTagBlue)
-                            filter()
-                            
-                            const ingredientsInput = liste1.children
-                            for (const ingredient of ingredientsInput) {
-                                ingredient.style.display = "none"
-                            }
-                            for (const ingredient of ingredientsInput) {
-                                let textIngredients = ingredient.textContent                              
-                                for (let i = 0; i < afficheIngredients.length; i++) {
-                                    const ingredientsRestants = afficheIngredients[i].ingredient
-                                    if (textIngredients == ingredientsRestants) {
-                                        ingredient.style.display = "block"
-                                    }
-                                }    
-                            }
-                        })
-                    }
-                }               
-
-                // Appliance
-                let afficheAppliance = recettesFiltrees[i].appliance
-                const liAppliance = document.createElement('li')
-                liAppliance.textContent = afficheAppliance
-                const dejaLa = [...liste2.children].map(tag => tag.textContent.toLowerCase())
-                if(!dejaLa.includes(afficheAppliance.toLowerCase())) {
-                    liste2.appendChild(liAppliance)
-                    // TAGS
-                    liAppliance.addEventListener('click', (e) => {
-                        const newTagGreen = document.createElement('li')
-                        const pNewTagGreen = document.createElement('p')
-                        const closeNewTagGreen = document.createElement('i')
-                        closeNewTagGreen.className = "fa-regular fa-circle-xmark"
-                        pNewTagGreen.textContent = afficheAppliance
-                        newTagGreen.className = "tag green"
-                        newTagGreen.appendChild(pNewTagGreen)
-                        newTagGreen.appendChild(closeNewTagGreen)
-                        sectionTag.appendChild(newTagGreen)
-                        filter()
-
-                        const applianceInput = liste2.children
-                        for (const appliance of applianceInput) {
-                            appliance.style.display = "none"
+                // #region ingredients
+                    const afficheIngredients = recettesFiltrees[i].ingredients 
+                    for (let n = 0; n < afficheIngredients.length; n++) {
+                        const listeIngredients = afficheIngredients[n].ingredient
+                        const liIngredients = document.createElement('li')
+                        liIngredients.textContent = listeIngredients
+                        // liIngredients est la liste de tout les ingredients des recettes filtrées
+                        const dejaLa = [...liste1.children].map(tag => tag.textContent.toLowerCase())
+                        // dejala est la liste des ingrédients dans la recherche avancée
+                        if (!dejaLa.includes(listeIngredients.toLowerCase())) {
+                            // pour gérer les doublons
+                            liste1.appendChild(liIngredients)
+                            liIngredients.addEventListener('click', (e) => {
+                                // création tag
+                                const newTagBlue = document.createElement('li')
+                                const pNewTagBlue = document.createElement('p')
+                                const closeNewTagBlue = document.createElement('i')
+                                closeNewTagBlue.className = "fa-regular fa-circle-xmark"
+                                pNewTagBlue.textContent = listeIngredients
+                                newTagBlue.className = "tag blue"
+                                newTagBlue.appendChild(pNewTagBlue)
+                                newTagBlue.appendChild(closeNewTagBlue)
+                                sectionTag.appendChild(newTagBlue)
+                                filter()
+                            })
                         }
-                        for (const appliance of applianceInput) {
-                            let textAppliance = appliance.textContent                              
-                            for (let i = 0; i < afficheAppliance.length; i++) {
-                                const appliancesRestants = afficheAppliance
-                                if (textAppliance == appliancesRestants) {
-                                    appliance.style.display = "block"
-                                }
-                            }    
-                        }
-                    })
-                }
-                
-                // Ustensiles
-                const afficheUstensils = recettesFiltrees[i].ustensils
-                for (let u = 0; u < afficheUstensils.length; u++) {
-                    const listeUstensils = afficheUstensils[u]
-                    const liUstensils = document.createElement('li')
-                    liUstensils.textContent = listeUstensils
-                    const dejaLa = [...liste3.children].map(tag => tag.textContent.toLowerCase())
-                    if (!dejaLa.includes(listeUstensils.toLowerCase())) {
-                        liste3.appendChild(liUstensils)
+                    }               
+                // #endregion ingredients
+
+                // #region Appliance
+                    let afficheAppliance = recettesFiltrees[i].appliance
+                    const liAppliance = document.createElement('li')
+                    liAppliance.textContent = afficheAppliance
+                    const dejaLa = [...liste2.children].map(tag => tag.textContent.toLowerCase())
+                    if(!dejaLa.includes(afficheAppliance.toLowerCase())) {
+                        liste2.appendChild(liAppliance)
                         // TAGS
-                        liUstensils.addEventListener('click', (e) => {
-                            const newTagRed = document.createElement('li')
-                            const pNewTagRed = document.createElement('p')
-                            const closeNewTagRed = document.createElement('i')
-                            closeNewTagRed.className = "fa-regular fa-circle-xmark"
-                            pNewTagRed.textContent = afficheUstensils[u]
-                            newTagRed.className = "tag red"
-                            newTagRed.appendChild(pNewTagRed)
-                            newTagRed.appendChild(closeNewTagRed)
-                            sectionTag.appendChild(newTagRed)
+                        liAppliance.addEventListener('click', (e) => {
+                            const newTagGreen = document.createElement('li')
+                            const pNewTagGreen = document.createElement('p')
+                            const closeNewTagGreen = document.createElement('i')
+                            closeNewTagGreen.className = "fa-regular fa-circle-xmark"
+                            pNewTagGreen.textContent = afficheAppliance
+                            newTagGreen.className = "tag green"
+                            newTagGreen.appendChild(pNewTagGreen)
+                            newTagGreen.appendChild(closeNewTagGreen)
+                            sectionTag.appendChild(newTagGreen)
                             filter()
-
-                            const ustensilesInput = liste3.children
-                            for (const ustensile of ustensilesInput) {
-                                ustensile.style.display = "none"
-                            }
-                            for (const ustensile of ustensilesInput) {
-                                let textUstensile = ustensile.textContent                              
-                                for (let i = 0; i < afficheUstensils.length; i++) {
-                                    const ustensilesRestants = afficheUstensils[i]
-                                    if (textUstensile == ustensilesRestants) {
-                                        ustensile.style.display = "block"
-                                    }
-                                }    
-                            }
                         })
                     }
-                }
-            } 
+                // #endregion Appliance
+                
+                // #region Ustensiles
+                    const afficheUstensils = recettesFiltrees[i].ustensils
+                    for (let u = 0; u < afficheUstensils.length; u++) {
+                        const listeUstensils = afficheUstensils[u]
+                        const liUstensils = document.createElement('li')
+                        liUstensils.textContent = listeUstensils
+                        const dejaLa = [...liste3.children].map(tag => tag.textContent.toLowerCase())
+                        if (!dejaLa.includes(listeUstensils.toLowerCase())) {
+                            liste3.appendChild(liUstensils)
+                            // TAGS
+                            liUstensils.addEventListener('click', (e) => {
+                                const newTagRed = document.createElement('li')
+                                const pNewTagRed = document.createElement('p')
+                                const closeNewTagRed = document.createElement('i')
+                                closeNewTagRed.className = "fa-regular fa-circle-xmark"
+                                pNewTagRed.textContent = afficheUstensils[u]
+                                newTagRed.className = "tag red"
+                                newTagRed.appendChild(pNewTagRed)
+                                newTagRed.appendChild(closeNewTagRed)
+                                sectionTag.appendChild(newTagRed)
+                                filter()
+                            })
+                        }
+                    }
+                // #endregion Ustensiles
+            }                   
+            
         }
         else {
             renderCards(recettes)
@@ -195,7 +222,9 @@ function recherchePrincipale() {
             <p><strong>Désolé, aucune recette ne correspond à votre critère…</strong> vous pouvez chercher « Poulet coco réunionnais », « poisson », « Lasagne Courgettes et Chèvre », « Far breton », « Crumble aux pommes » etc.</p>
             `  
         }
-    })
+    }
+    barreDeRecherche.addEventListener('input', runRecherche)
+    runRecherche()
 }
 
 function gettags(color) {
@@ -205,6 +234,24 @@ function gettags(color) {
     return lesTags.map(tag => tag.textContent)
 }
 
+function containBlueTags(recipe, tags) {
+    // fonction qui va pouvoir être utilisée dans la fonction filter (en dessous)
+    // fait partie du filtrage
+    let count = tags.length
+    for (const tag of tags) {
+        if (recipe.ingredients.some(i => i.ingredient.toLowerCase() === tag.toLowerCase())) {
+            count--
+        }
+        if (recipe.ustensils.some(u => u.toLowerCase() === tag.toLowerCase())) {
+            count--
+        }
+        if (recipe.appliance.toLowerCase() === tag.toLowerCase()) {
+            count--
+        }
+    }
+    return count>0?false:true
+}
+
 function filter() {
     const blueTags = gettags("blue")
     const redTags = gettags("red")
@@ -212,13 +259,14 @@ function filter() {
     const barreDeRecherche = document.querySelector('#searchPrincipale')
     const entreeValue = barreDeRecherche.value.toLowerCase()
 
+    // permet de filtrer les tags ET la recherche principale
     const recettesTags = recettes.filter((recette) => {
         return ( 
-            (blueTags.length == 0 || recette.ingredients.some(i => i.ingredient.includes(blueTags)))
+            (blueTags.length == 0 || containBlueTags(recette,blueTags))
             &&
-            (redTags.length == 0 || recette.ustensils.some(u => u.includes(redTags)))
+            (redTags.length == 0 || containBlueTags(recette,redTags))
             &&
-            (greenTags.length == 0 || recette.appliance.includes(greenTags))
+            (greenTags.length == 0 || containBlueTags(recette,greenTags))
             &&
             (
                 recette.name.toLowerCase().includes(entreeValue)
@@ -229,6 +277,8 @@ function filter() {
             )
         )
     })
+
+    // message d'erreur
     if (recettesTags == false) {
         const section = document.getElementById('aucune_recette')
         section.innerHTML = `
@@ -237,6 +287,7 @@ function filter() {
     }
     renderCards(recettesTags)
 
+    // fermeture d'un tag
     const lesTags = document.querySelectorAll('.tag')
     for (const tag of lesTags) {
         const closeTag = tag.lastChild        
@@ -246,6 +297,69 @@ function filter() {
             filter() 
         }) 
     }
+
+    // #region maj recherches avancées ingredients
+        const ulInput = document.querySelector('#divIngredients > ul')
+        const ingredientsInput = ulInput.children
+        // ingredients présent sans le tag
+
+        for (const ingredient of ingredientsInput) {
+            ingredient.style.display = "none"
+        }
+        for (const ingredient of ingredientsInput) {
+            let textIngredients = ingredient.textContent
+            for (const recetteTag of recettesTags) {
+                const ingredientsRestants = recetteTag.ingredients
+                for (const ingredientrestant of ingredientsRestants) {
+                    const ingredientsRecettesPresentes = ingredientrestant.ingredient
+                    if (textIngredients == ingredientsRecettesPresentes) {
+                        ingredient.style.display = "block"
+                    }
+                }
+            }
+        }
+    // #endregion maj recherches avancées ingredients
+
+    // #region maj recherches avancées appareils
+        const ulInput2 = document.querySelector('#divAppareils > ul')
+        const appareilsInput = ulInput2.children
+        // appareils présent sans le tag
+
+        for (const appareil of appareilsInput) {
+            appareil.style.display = "none"
+        }
+        for (const appareil of appareilsInput) {
+            let textAppareil = appareil.textContent                              
+            for (const recetteTag of recettesTags) {
+                const appareilsRestants = recetteTag.appliance
+                if (textAppareil == appareilsRestants) {
+                    appareil.style.display = "block"
+                }
+            } 
+        }
+    // #endregion maj recherches avancées appareils
+
+    // #region maj recherches avancées ustensiles
+        const ulInput3 = document.querySelector('#divUstensiles > ul')
+        const ustensilesInput = ulInput3.children
+        // ustensiles présent sans le tag
+
+        for (const ustensile of ustensilesInput) {
+            ustensile.style.display = "none"
+        }
+        for (const ustensile of ustensilesInput) {
+            let textUstensile = ustensile.textContent   
+            for (const recetteTag of recettesTags) {
+                const appareilsRestants = recetteTag.ustensils
+                for (let i = 0; i < appareilsRestants.length; i++) {
+                    const appareilsRecettesPresentes = appareilsRestants[i];
+                    if (textUstensile == appareilsRecettesPresentes) {
+                        ustensile.style.display = "block"
+                    }
+                }
+            }    
+        }
+    // #endregion maj recherches avancées ustensiles
 }
 
 function rechercheAvancee() {
