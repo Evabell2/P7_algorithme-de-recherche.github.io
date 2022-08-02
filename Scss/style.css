@@ -2,6 +2,12 @@ body {
   margin: 0 5%;
 }
 
+@media screen and (max-width: 1200px) {
+  body {
+    margin: 0;
+  }
+}
+
 body Header {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -77,6 +83,9 @@ body nav {
 
 body nav > div {
   position: relative;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   margin: 0 10px;
   border-radius: 5px;
 }
@@ -122,7 +131,7 @@ body nav > div > div {
 
 body nav > div > div input {
   width: 130px;
-  height: 45px;
+  height: 75px;
   padding-left: 20px;
   border: none;
   border-radius: 5px;
@@ -160,6 +169,7 @@ body nav > div > div input:focus-visible {
 
 body nav > div > div i {
   margin-right: 20px;
+  cursor: pointer;
 }
 
 body nav > div > div i::before {
@@ -169,8 +179,8 @@ body nav > div > div i::before {
 body nav > div ul {
   -webkit-column-count: 3;
           column-count: 3;
-  -webkit-column-gap: 50px;
-          column-gap: 50px;
+  -webkit-column-gap: 30px;
+          column-gap: 30px;
   margin-top: 0;
   padding: 5px 20px;
 }
@@ -234,6 +244,10 @@ body section#affichage_tags .tag i::before {
   font-size: 18px;
 }
 
+body section#affichage_tags h2 {
+  display: none;
+}
+
 body section#affichage_des_recettes {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -261,10 +275,48 @@ body section#affichage_des_recettes article {
   border-radius: 5px;
 }
 
+@media screen and (max-width: 1405px) {
+  body section#affichage_des_recettes article {
+    height: 60vh;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  body section#affichage_des_recettes article {
+    width: calc((100%/2) - 30px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body section#affichage_des_recettes article {
+    width: 100%;
+    margin: 2% 15%;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  body section#affichage_des_recettes article {
+    width: 100%;
+    margin: 2%;
+  }
+}
+
 body section#affichage_des_recettes article section {
   height: 30vh;
   background: #e4e4e4;
   border-radius: 0 0 5px 5px;
+}
+
+@media screen and (max-width: 1405px) {
+  body section#affichage_des_recettes article section {
+    height: 35vh;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  body section#affichage_des_recettes article section {
+    height: 40vh;
+  }
 }
 
 body section#affichage_des_recettes article section .container_titre {
@@ -333,6 +385,10 @@ body section#affichage_des_recettes article section .container_infos .descriptio
   -webkit-box-orient: vertical;
 }
 
+body section#affichage_des_recettes h2 {
+  display: none;
+}
+
 body section#aucune_recette {
   margin: 5% 20%;
 }
@@ -344,27 +400,13 @@ body section#aucune_recette p {
   font-size: 18px;
 }
 
-.input_ouvert div {
-  height: initial;
+body section#aucune_recette h2 {
+  display: none;
 }
 
-.input_ouvert div input {
+.input_ouvert input {
   width: 100%;
-  height: 75px;
   opacity: .5;
-}
-
-.input_ouvert div i {
-  -webkit-transform: rotate(180deg);
-          transform: rotate(180deg);
-}
-
-.input_ferme {
-  height: 100%;
-}
-
-.input_ferme input {
-  height: 75px;
 }
 
 .bold {

@@ -1,5 +1,8 @@
 body {
     margin: 0 5%;
+    @media screen and (max-width: 1200px) {
+        margin: 0;
+    }
     Header {
         display: flex;
         justify-content: center;
@@ -43,6 +46,7 @@ body {
         margin: 0 15px;
         &>div {
             position: relative;
+            height: fit-content;
             margin: 0 10px;
             border-radius: 5px;
             &:first-of-type {
@@ -72,7 +76,7 @@ body {
                 height: 100%;
                 input {
                     width: 130px;
-                    height: 45px;
+                    height: 75px;
                     padding-left: 20px;
                     border: none;
                     border-radius: 5px;
@@ -89,6 +93,7 @@ body {
                 }
                 i {
                     margin-right: 20px;
+                    cursor: pointer;
                     &::before {
                         color: white;
                     }
@@ -96,7 +101,7 @@ body {
             }
             ul {
                 column-count: 3;
-                column-gap: 50px;
+                column-gap: 30px;
                 margin-top: 0;
                 padding: 5px 20px;
                 li {
@@ -145,6 +150,9 @@ body {
                 }
             }
         }
+        h2 {
+            display: none;
+        }
     }
     section#affichage_des_recettes {
         display: flex;
@@ -159,10 +167,30 @@ body {
             margin: 15px;
             background: #c9bbbb;
             border-radius: 5px;
+            @media screen and (max-width: 1405px) {
+                height: 60vh;
+            }
+            @media screen and (max-width: 980px) {
+                width: calc((100%/2) - 30px);
+            }
+            @media screen and (max-width: 768px) {
+                width: 100%;
+                margin: 2% 15%;
+            }
+            @media screen and (max-width: 479px) {
+                width: 100%;
+                margin: 2%;
+            }
             section {
                 height: 30vh;
                 background: #e4e4e4;
                 border-radius: 0 0 5px 5px;
+                @media screen and (max-width: 1405px) {
+                    height: 35vh;
+                }
+                @media screen and (max-width: 1200px) {
+                    height: 40vh;
+                }
                 .container_titre {
                     display: flex;
                     justify-content: space-between;
@@ -207,6 +235,9 @@ body {
                 }
             }
         }
+        h2 {
+            display: none;
+        }
     } 
     section#aucune_recette {
         margin: 5% 20%;
@@ -216,26 +247,17 @@ body {
             line-height: 1.5;
             font-size: 18px;
         }
+        h2 {
+            display: none;
+        }
     }
 }
 
-.input_ouvert div {
-    height: initial;
-    input {
-        width: 100%;
-        height: 75px;
-        opacity: .5;
-    }
-    i {
-        transform: rotate(180deg);
-    }
+.input_ouvert input {
+    width: 100%;
+    opacity: .5;
 }
-.input_ferme {
-    height: 100%;
-    input {
-        height: 75px;
-    }
-}
+
 .bold {
     font-weight: bold;
 }
